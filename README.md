@@ -11,3 +11,6 @@ Project yang dibangun digunakan dalam menyediakan API untuk resep dan bahan maka
 
 ## Programming Language
 Bahasa pemrograman yang digunakan adalah python 3.7 dengan menggunakan bantuan beberapa library, seperti flask, marshmallow, SQLAlchemy dan yang lainnya.
+
+## Dokumentasi
+File dokumentasi API dapat dilihat pada dokumen [API Resep Masakan](https://github.com/raizenshout/ta_23219031/blob/master/API-ResepMasakan.docx). Selain itu API documentation juga dapat dilihat pada aplikasi apabila sudah dijalankan pada environment pipenev.
