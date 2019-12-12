@@ -2,8 +2,9 @@
 
 Project ini dibuat dalam rangka menyelesaikan tugas akhir mata kuliah OOP Semester 1 ITB tahun 2019 untuk mahasiswa beridentitas:
 
-Nama  : Rizky Andrian
-NIM   : 23219031
+Nama  : __RIZKY ANDRIAN__
+
+NIM   : __23219031__
 
 
 ## Topik
