@@ -1,0 +1,449 @@
+swagger: "2.0"
+info:
+  description: API mengenai Resep Masakan Indonesia dan bahan-bahan penyusunnya
+  version: "1.0"
+  title: API Resep Masakan Indonesia
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+consumes:
+  - application/json
+produces:
+  - application/json
+
+basePath: /api
+
+# Paths yang didukung oleh aplikasi server
+paths:
+  /resep:
+    get:
+      operationId: resep.read_all
+      tags:
+        - Resep
+      summary: Melihat seluruh daftar resep yang diurutkan berdasarkan waktu upload/pembuatan
+      description: Melihat seluruh data resep yang diurutkan berdasarkan waktu upload/pembuatan
+      responses:
+        200:
+          description: Proses pembacaan data resep berhasil.
+          schema:
+            type: array
+            items:
+              properties:
+                resep_id:
+                  type: integer
+                  description: Id dari resep
+                nama_resep:
+                  type: string
+                  description: Nama resep
+                tags:
+                  type: string
+                  description: Kategori jenis masakan dari resep
+                penulis:
+                  type: string
+                  description: Penulis resep
+                timestamp:
+                  type: string
+                  description: Waktu upload/pembuatan resep
+                bahan:
+                  type: array
+                  items:
+                    properties:
+                      resep_id:
+                        type: integer
+                        description: Resep yang berkaitan dengan bahan masakan ini
+                      bahan_id:
+                        type: integer
+                        description: Id dari bahan masakan
+                      nama_bahan:
+                        type: string
+                        description: Nama bahan masakan
+                      kuantitas:
+                        type: integer
+                        description: Kuantitas penggunaan
+                      satuan:
+                        type: string
+                        description: Satuan yang digunakan
+                      timestamp:
+                        type: string
+                        description: Waktu upload/pembuatan detil bahan masakan ini
+
+    post:
+      operationId: resep.create
+      tags:
+        - Resep
+      summary: Membuat sebuah resep baru
+      description: Membuat sebuah resep baru
+      parameters:
+        - name: resep
+          in: body
+          description: Detil objek resep yang akan dibuat
+          required: True
+          schema:
+            type: object
+            properties:
+              nama_resep:
+                type: string
+                description: Nama resep yang akan dibuat
+              penulis:
+                type: string
+                description: Penulis dari resep yang akan dibuat
+              tags:
+                type: string
+                description: Kategori jenis masakan dari resep masakan yang dibuat
+      responses:
+        201:
+          description: Pembuatan resep baru berhasil.
+          schema:
+            properties:
+              resep_id:
+                type: integer
+                description: Id dari resep yang telah dibuat
+              nama_resep:
+                type: string
+                description: Nama resep yang telah dibuat
+              penulis:
+                type: string
+                description: Penulis dari resep yang telah dibuat
+              tags:
+                type: string
+                description: Kategori jenis masakan dari resep masakan yang telah dibuat
+              timestamp:
+                type: string
+                description: Waktu upload/pembuatan resep ke dalam database
+
+  /resep/{resep_id}:
+    get:
+      operationId: resep.read_one
+      tags:
+        - Resep
+      summary: Mengambil detil 1 resep
+      description: Mengambil detil 1 resep
+      parameters:
+        - name: resep_id
+          in: path
+          description: Id dari resep yang akan diambil detilnya
+          type: integer
+          required: True
+      responses:
+        200:
+          description: Proses pengambilan detil resep dari database resep berhasil.
+          schema:
+            type: object
+            properties:
+              resep_id:
+                type: string
+                description: Id dari resep
+              nama_resep:
+                type: string
+                description: Nama resep
+              penulis:
+                type: string
+                description: Penulis resep
+              tags:
+                type: string
+                description: Kategori jenis masakan dari resep
+              timestamp:
+                type: string
+                description: Waktu pembacaan/update data resep
+              bahan:
+                type: array
+                items:
+                  properties:
+                    resep_id:
+                      type: integer
+                      description: Id dari resep yang berkaitan dengan bahan masakan ini
+                    bahan_id:
+                      type: integer
+                      description: Id dari bahan masakan ini
+                    nama_bahan:
+                      type: string
+                      description: Nama bahan masakan
+                    kuantitas:
+                        type: integer
+                        description: Kuantitas bahan masakan
+                    satuan:
+                        type: string
+                        description: Satuan yang digunakan
+                    timestamp:
+                      type: string
+                      description: Waktu pembuatan/upload dari bahan masakan
+
+    put:
+      operationId: resep.update
+      tags:
+        - Resep
+      summary: Memperbarui detil sebuah resep
+      description: Memperbarui detil sebuah resep
+      parameters:
+        - name: resep_id
+          in: path
+          description: Id dari resep yang akan diperbarui
+          type: integer
+          required: True
+        - name: resep
+          in: body
+          schema:
+            type: object
+            properties:
+              nama_resep:
+                type: string
+                description: Nama resep
+              penulis:
+                type: string
+                description: Penulis resep
+              tags:
+                type: string
+                description: Kategori jenis masakan dari resep
+      responses:
+        200:
+          description: Berhasil memperbarui resep
+          schema:
+            properties:
+              resep_id:
+                type: integer
+                description: Id dari resep di dalam database
+              nama_resep:
+                type: string
+                description: Nama resep
+              penulis:
+                  type: string
+                  description: Penulis resep
+              tags:
+                  type: string
+                  description: Kategori jenis masakan dari resep
+
+    delete:
+      operationId: resep.delete
+      tags:
+        - Resep
+      summary: Menghapus sebuah resep dari daftar resep
+      description: Menghapus sebuah resep dari daftar resep
+      parameters:
+        - name: resep_id
+          in: path
+          type: integer
+          description: Id dari resep yang akan dihapus
+          required: true
+      responses:
+        200:
+          description: Berhasil menghapus sebuah resep
+
+  /resep/{resep_id}/bahan:
+    post:
+      operationId: bahan.create
+      tags:
+        - Bahan
+      summary: Menambahkan bahan yang berhubungan dengan sebuah resep
+      description: Menambahkan bahan yang berhubungan dengan sebuah resep
+      parameters:
+        - name: resep_id
+          in: path
+          description: Id dari resep yang berhubungan dengan bahan masakan
+          type: integer
+          required: True
+        - name: bahan
+          in: body
+          description: Detil objek bahan yang akan ditambahkan
+          required: True
+          schema:
+            type: object
+            properties:
+              nama_bahan:
+                type: string
+                description: Nama bahan masakan
+              kuantitas:
+                type: integer
+                description: Kuantitas penggunaan
+              satuan:
+                type: string
+                description: Satuan yang digunakan
+      responses:
+        201:
+          description: Berhasil menambahkan sebuah bahan
+          schema:
+            properties:
+              resep_id:
+                type: integer
+                description: Id dari resep yang berhubungan dengan bahan makanan
+              bahan_id:
+                type: integer
+                description: Id dari bahan yang ditambahkan
+              nama_bahan:
+                type: string
+                description: Nama bahan
+              kuantitas:
+                  type: integer
+                  description: Kuantitas bahan yang digunakan
+              satuan:
+                  type: string
+                  description: Satuan yang digunakan
+              timestamp:
+                type: string
+                description: Waktu pembuatan/upload bahan
+
+  /resep/{resep_id}/bahan/{bahan_id}:
+    get:
+      operationId: bahan.read_one
+      tags:
+        - Bahan
+      summary: Mengambil detil bahan-bahan yang digunakan untuk sebuah resep
+      description: Mengambil detil bahan-bahan yang digunakan untuk sebuah resep
+      parameters:
+        - name: resep_id
+          in: path
+          description: Id dari resep yang berhubungan dengan bahan
+          type: integer
+          required: True
+        - name: bahan_id
+          in: path
+          description: Id dari bahan masakan
+          type: integer
+          required: True
+      responses:
+        200:
+          description: Berhasil mengambil detil bahan untuk sebuah resep
+          schema:
+            type: object
+            properties:
+              bahan_id:
+                type: integer
+                description: Id dari bahan
+              resep_id:
+                type: integer
+                description: Id dari resep yang berkaitan dengan bahan
+              nama_bahan:
+                type: string
+                description: Nama bahan
+              kuantitas:
+                type: integer
+                description: Kuantitas bahan yang digunakan
+              satuan:
+                type: string
+                description: Satuan yang digunakan
+              timestamp:
+                type: string
+                description: Waktu upload/pembuatan detil bahan
+
+    put:
+      operationId: bahan.update
+      tags:
+        - Bahan
+      summary: Memperbarui sebuah bahan yang berhubungan dengan sebuah resep
+      description: Memperbarui sebuah bahan yang berhubungan dengan sebuah resep
+      parameters:
+        - name: resep_id
+          in: path
+          description: Id resep yang akan diperbarui
+          type: integer
+          required: True
+        - name: bahan_id
+          in: path
+          description: Id dari bahan yang berkaitan dengan resep
+          type: integer
+          required: True
+        - name: bahan
+          in: body
+          schema:
+            type: object
+            properties:
+              nama_bahan:
+                type: string
+                description: Nama bahan
+              kuantitas:
+                type: integer
+                description: Kuantitas bahan yang digunakan
+              satuan:
+                type: string
+                description: Satuan yang digunakan
+      responses:
+        200:
+          description: Berhasil memperbarui detil bahan
+          schema:
+            properties:
+              bahan_id:
+                type: string
+                description: Id dari bahan yang berhubungan dengan resep
+              resep_id:
+                type: integer
+                description: Id dari resep di database
+              nama_bahan:
+                type: string
+                description: Nama bahan
+              kuantitas:
+                type: integer
+                description: Kuantitas bahan yang digunakan
+              satuan:
+                  type: string
+                  description: Satuan yang digunakan
+              timestamp:
+                type: string
+                description: Waktu upload/pembuatan detil bahan
+
+    delete:
+      operationId: bahan.delete
+      tags:
+        - Bahan
+      summary: Delete a bahan associated with a resep
+      description: Delete a bahan associated with a resep
+      parameters:
+        - name: resep_id
+          in: path
+          description: Id of resep associated with bahan
+          type: integer
+          required: True
+        - name: bahan_id
+          in: path
+          description: Id of bahan
+          type: integer
+          required: True
+      responses:
+        200:
+          description: Successfully deleted a bahan
+
+  /bahan:
+    get:
+      operationId: bahan.read_all
+      tags:
+        - Bahan
+      summary: Mengambil seluruh data bahan untuk seluruh resep yang diurutkan berdasarkan waktu upload/pembuatan
+      description: Mengambil seluruh data bahan untuk seluruh resep yang diurutkan berdasarkan waktu upload/pembuatan
+      responses:
+        200:
+          description: Berhasil mengambil data bahan untuk seluruh resep
+          schema:
+            type: array
+            items:
+              properties:
+                bahan_id:
+                  type: integer
+                  description: Id dari bahan
+                nama_bahan:
+                  type: string
+                  description: Nama bahan
+                kuantitas:
+                  type: integer
+                  description: Kuantitas bahan yang digunakan
+                satuan:
+                    type: string
+                    description: Satuan yang digunakan
+                timestamp:
+                    type: string
+                    description: Waktu upload/pembuatan detil bahan
+                resep:
+                  type: object
+                  properties:
+                    resep_id:
+                      type: integer
+                      description: Id dari resep yang berkaitan
+                    nama_resep:
+                      type: string
+                      description: Nama resep
+                    penulis:
+                      type: string
+                      description: Penulis resep
+                    tags:
+                      type: string
+                      description: Kategori jenis masakan dari resep
+                    timestamp:
+                      type: string
+                      description: Waktu pembuatan/perbaikan resep yang berkaitan

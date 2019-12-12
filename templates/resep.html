@@ -1,0 +1,64 @@
+{% extends "parent.html" %}
+{% block title %}Daftar Resep{% endblock %}
+{% block head %}
+    {{ super() }}
+    <link rel="stylesheet" href="/static/css/resep.css">
+{% endblock %}
+
+{% block page_name %}Daftar Resep Masakan{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <input id="url_resep_id" type="hidden" value="{{ resep_id }}" />
+        <div class="section editor">
+            <div>
+                <span>Resep ID:</span>
+                <span id="resep_id"></span>
+            </div>
+            <div>
+            <label for="nama_resep">Nama Resep
+                <input id="nama_resep" type="text" />
+            </label>
+            <br />
+            <label for="penulis">Nama Penulis Resep
+                <input id="penulis" type="text" />
+            </label>
+            <br />
+            <label for="tags">Jenis Masakan
+                <input id="tags" type="text" />
+            </label>
+            <br />
+            <button id="create">Create</button>
+            <button id="update">Update</button>
+            <button id="delete">Delete</button>
+            <button id="reset">Reset</button>
+        </div>
+            <p align="right" style="margin-right:3%">Double click Resep for more detail</p>
+            <div class="resep">
+            <table>
+                <caption>Detail Resep</caption>
+                <thead>
+                    <tr>
+                        <th>Timestamp</th>
+                        <th>Resep</th>
+                        <th>Nama Penulis</th>
+                        <th>Jenis Masakan</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+        <div class="error"></div>
+    </div>
+    <div class="error">
+    </div>
+{% endblock %}
+
+{% block javascript %}
+{{ super() }}
+<script type="module">
+    // Give the imported MVC components a namespace
+    import * as MVC from "/static/js/resep.js";
+    // Create an intentional global variable referencing the import
+    window.mvc = MVC;
+</script>
+{% endblock %}

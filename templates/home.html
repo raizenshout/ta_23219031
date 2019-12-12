@@ -1,0 +1,39 @@
+{% extends "parent.html" %}
+{% block title %}Masakan Indonesia{% endblock %}
+{% block head %}
+    {{ super() }}
+    <link rel="stylesheet" href="/static/css/home.css">
+{% endblock %}
+
+{% block page_name %}Koleksi Masakan Indonesia{% endblock %}
+
+{% block body %}
+<div class="container">
+    <p align="right">Hint: Double click Resep and Nama Bahan for more detail</p>
+    <div class="blog">
+        <table>
+            <caption>Daftar Masakan</caption>
+            <thead>
+                <tr>
+                    <th>Timestamp</th>
+                    <th>Resep</th>
+                    <th>Jenis Masakan</th>
+                    <th>Nama Bahan</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+<div class="error hidden"></div>
+
+{% endblock %}
+
+{% block javascript %}
+{{ super() }}
+<script type="module">
+    // Give the imported MVC components a namespace
+    import MVC from "/static/js/home.js";
+    // Create an intentional global variable referencing the import
+    window.mvc = MVC;
+</script>
+{% endblock %}
