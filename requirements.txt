@@ -1,0 +1,11 @@
+flask==*
+connexion==*
+swagger-ui-bundle==*
+flask-sqlalchemy==*
+flask-marshmallow==*
+marshmallow==*
+marshmallow-sqlalchemy==*
+flask-wtf==*
+flask-login==*
+flask-bcrypt==*
+uwsgi
