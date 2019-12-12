@@ -83,6 +83,11 @@ def register_user():
         return redirect(url_for('users.login'))
     return render_template('users/register.html', title='Register', form=form)
 
+@connex_app.route("/login", methods=['POST'])
+def login_user():
+    email = request.form['email']
+    password = request.form['password']
+    pass
 
 if __name__ == "__main__":
-    connex_app.run(debug=False)
+    connex_app.run(debug=True)
